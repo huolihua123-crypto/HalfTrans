@@ -6,7 +6,7 @@
 
 import { sendToBackground } from '@shared/messaging';
 import { renderLoading, renderTranslation, renderError, markSkipped } from './renderer';
-import { showSelectionPopup } from './selection-popup';
+import { showSelectionPopup, showSelectionPopupLoading } from './selection-popup';
 import { buildBatchContext, collectPageContext } from './context-builder';
 import type { TranslationContext } from '@shared/types';
 
@@ -43,8 +43,9 @@ export class TranslationOrchestrator {
     });
   }
 
-  /** 选区翻译：生成临时 ID，收集页面上下文后发送，结果通过弹窗展示 */
+  /** 选区翻译：立即弹出加载态弹窗，生成临时 ID，收集页面上下文后发送 */
   translateSelection(text: string): void {
+    showSelectionPopupLoading();
     const id = `sel-${this.selectionCounter++}`;
     this.selectionIds.add(id);
     const context: TranslationContext = {

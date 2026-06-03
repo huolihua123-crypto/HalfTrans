@@ -63,3 +63,27 @@
 .halftrans-sel-popup-close:hover {
   color: #333;
 }
+
+.halftrans-sel-popup-loading {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #666;
+  font-size: 13px;
+}
+
+.halftrans-spinner {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border: 2px solid #e0e0e0;
+  border-top-color: #4f9cf8;
+  border-radius: 50%;
+  animation: halftrans-spin 0.6s linear infinite;
+}
+
+@keyframes halftrans-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
