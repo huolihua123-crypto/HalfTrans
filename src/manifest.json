@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "HalfTrans",
   "version": "1.0.0",
-  "description": "Translate English content into minimal-cognitive-cost Chinese-English hybrid for internet professionals.",
+  "description": "一个面向互联网从业者的基于AI大模型的Chrome 翻译插件，将英文技术内容转换为“最小认知成本的中英混合表达”。",
   "permissions": ["contextMenus", "storage", "activeTab"],
   "background": {
     "service_worker": "src/background/index.ts",
