@@ -1,0 +1,65 @@
+.halftrans-result {
+  margin-left: 6px;
+  padding: 2px 6px;
+  border-radius: 3px;
+  background-color: #fffde6;
+  font-size: 0.95em;
+  line-height: 1.6;
+  color: #333;
+  position: relative;
+}
+
+.halftrans-result.halftrans-error {
+  background-color: #fdf0f0;
+}
+
+.halftrans-result .halftrans-close {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  color: #999;
+  padding: 2px 6px;
+}
+
+.halftrans-result .halftrans-close:hover {
+  color: #333;
+}
+
+.halftrans-loading {
+  margin-left: 6px;
+  color: #999;
+  font-style: italic;
+}
+
+.halftrans-sel-popup {
+  position: fixed;
+  max-width: 420px;
+  padding: 10px 32px 10px 12px;
+  border-radius: 6px;
+  background: #fffde6;
+  border: 1px solid #e8e0b0;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  font-size: 14px;
+  line-height: 1.6;
+  color: #333;
+  z-index: 2147483647;
+  word-wrap: break-word;
+}
+
+.halftrans-sel-popup-close {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  color: #999;
+  padding: 2px 6px;
+  line-height: 1;
+}
+
+.halftrans-sel-popup-close:hover {
+  color: #333;
+}

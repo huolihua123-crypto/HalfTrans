@@ -1,0 +1,35 @@
+{
+  "manifest_version": 3,
+  "name": "HalfTrans",
+  "version": "1.0.0",
+  "description": "Translate English content into minimal-cognitive-cost Chinese-English hybrid for internet professionals.",
+  "permissions": ["contextMenus", "storage", "activeTab"],
+  "background": {
+    "service_worker": "src/background/index.ts",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["src/content/index.ts"]
+    }
+  ],
+  "action": {
+    "default_popup": "src/popup/index.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "options_ui": {
+    "page": "src/options/index.html",
+    "open_in_tab": true
+  },
+  "commands": {
+    "translate-page": {
+      "suggested_key": { "default": "Ctrl+Shift+T", "mac": "Command+Shift+T" },
+      "description": "Translate current page"
+    }
+  }
+}
