@@ -1,3 +1,9 @@
+/**
+ * 核心类型定义
+ * 定义翻译请求/响应、用户设置、消息协议等全局共享类型
+ * 被所有模块引用，是系统的类型契约层
+ */
+
 export type TranslationStyle = 'colloquial' | 'formal';
 
 export interface ApiConfig {
