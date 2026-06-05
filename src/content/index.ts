@@ -5,17 +5,19 @@
  */
 
 import { onMessage } from '@shared/messaging';
+import { getSettings } from '@shared/storage';
 import { detectVisibleParagraphs, observeNewParagraphs } from './detector';
 import { resetPageContextCache } from './context-builder';
-import { initFloatingButton } from './floating-btn';
+import { initFloatingButton, destroyFloatingButton } from './floating-btn';
 import { toggleAllTranslations } from './renderer';
 import { TranslationOrchestrator } from './translator';
-import type { MessageType } from '@shared/types';
+import type { MessageType, UserSettings } from '@shared/types';
 import './styles/content.css';
 
 const orchestrator = new TranslationOrchestrator();
 let pageTranslateActive = false;   // 是否已激活整页翻译
 let translationsVisible = false;   // 翻译结果当前是否可见（用于 toggle）
+let floatingBtnMounted = false;    // 浮动按钮当前是否已挂载（守卫位，避免重复 init/destroy）
 
 /** 扫描视口内段落并送入翻译队列 */
 function translateVisibleParagraphs(): void {
@@ -49,9 +51,34 @@ function handlePageTranslate(): void {
   });
 }
 
-// 初始化选区翻译浮动按钮
-initFloatingButton((text) => {
-  orchestrator.translateSelection(text);
+/**
+ * 根据用户设置挂载或卸载浮动按钮。
+ * 用 floatingBtnMounted 守卫位避免重复 init/destroy。
+ */
+function applyFloatingBtnSetting(enabled: boolean): void {
+  if (enabled && !floatingBtnMounted) {
+    initFloatingButton((text) => {
+      orchestrator.translateSelection(text);
+    });
+    floatingBtnMounted = true;
+  } else if (!enabled && floatingBtnMounted) {
+    destroyFloatingButton();
+    floatingBtnMounted = false;
+  }
+}
+
+// 启动时按设置决定是否挂载浮动按钮
+// 老用户升级场景下 selectionPopupEnabled 字段可能缺失，?? true 兜底保证默认开启
+getSettings().then((s) => {
+  applyFloatingBtnSetting(s.selectionPopupEnabled ?? true);
+});
+
+// 实时响应设置变化：设置页修改后，已打开的页面立刻 mount/unmount
+chrome.storage.onChanged.addListener((changes, area) => {
+  if (area !== 'sync' || !changes.settings) return;
+  const newSettings = changes.settings.newValue as UserSettings | undefined;
+  if (!newSettings) return;   // 清除场景：忽略
+  applyFloatingBtnSetting(newSettings.selectionPopupEnabled ?? true);
 });
 
 // 监听 DOM 变化，整页翻译激活时自动翻译新出现的段落（节流 150ms）
