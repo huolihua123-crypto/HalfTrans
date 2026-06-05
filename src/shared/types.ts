@@ -26,6 +26,8 @@ export interface UserSettings {
   activeConfigId: string;
   style: TranslationStyle;
   shortcut: string;
+  /** 是否在选中文本时显示浮动"译"按钮 */
+  selectionPopupEnabled: boolean;
 }
 
 export interface TermEntry {
@@ -86,4 +88,5 @@ export const DEFAULT_SETTINGS: UserSettings = {
   activeConfigId: '',
   style: 'colloquial',
   shortcut: 'Ctrl+Shift+T',
+  selectionPopupEnabled: true,
 };

@@ -75,4 +75,15 @@ describe('storage', () => {
       expect(result).toEqual(terms);
     });
   });
+
+  describe('selectionPopupEnabled default', () => {
+    it('defaults to true so existing users keep seeing the floating button', () => {
+      expect(DEFAULT_SETTINGS.selectionPopupEnabled).toBe(true);
+    });
+
+    it('returns selectionPopupEnabled=true from getSettings on fresh install', async () => {
+      const settings = await getSettings();
+      expect(settings.selectionPopupEnabled).toBe(true);
+    });
+  });
 });
