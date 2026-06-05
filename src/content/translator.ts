@@ -63,8 +63,8 @@ export class TranslationOrchestrator {
 
   /** 处理翻译结果：选区翻译走弹窗，页面翻译走 DOM 注入；翻译结果与原文相同时标记跳过 */
   handleResult(paragraphId: string, translated: string): void {
-    // 选区翻译和右键菜单翻译（ctx- 前缀）的结果通过弹窗展示
-    if (this.selectionIds.has(paragraphId) || paragraphId.startsWith('ctx-')) {
+    // 选区翻译（含浮动按钮、右键菜单）的结果通过弹窗展示
+    if (this.selectionIds.has(paragraphId)) {
       this.selectionIds.delete(paragraphId);
       if (translated) {
         showSelectionPopup(translated);
@@ -83,7 +83,7 @@ export class TranslationOrchestrator {
   }
 
   handleError(paragraphId: string, error: string): void {
-    if (this.selectionIds.has(paragraphId) || paragraphId.startsWith('ctx-')) {
+    if (this.selectionIds.has(paragraphId)) {
       this.selectionIds.delete(paragraphId);
       showSelectionPopup(`翻译失败：${error}`);
       return;

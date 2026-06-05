@@ -32,14 +32,17 @@ chrome.runtime.onInstalled.addListener(() => {
   });
 });
 
-chrome.contextMenus.onClicked.addListener(async (info, tab) => {
+chrome.contextMenus.onClicked.addListener((info, tab) => {
   if (!tab?.id) return;
 
   if (info.menuItemId === 'halftrans-translate-page') {
     chrome.tabs.sendMessage(tab.id, { type: 'TRIGGER_PAGE_TRANSLATE' } as MessageType);
   } else if (info.menuItemId === 'halftrans-translate-selection' && info.selectionText) {
-    const emptyContext: TranslationContext = { pageContext: '', sectionContext: '', surroundingText: '', codeContext: '' };
-    await translateSingle(tab.id, info.selectionText, `ctx-${Date.now()}`, emptyContext);
+    // 转交给 content script，由编排器统一处理（复用 loading 弹窗 + 选区翻译流程）
+    chrome.tabs.sendMessage(tab.id, {
+      type: 'TRIGGER_SELECTION_TRANSLATE',
+      payload: { text: info.selectionText },
+    } as MessageType);
   }
 });
 

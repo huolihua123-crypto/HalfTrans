@@ -95,6 +95,10 @@ onMessage((message: MessageType) => {
     case 'TRIGGER_PAGE_TRANSLATE':
       handlePageTranslate();
       break;
+    case 'TRIGGER_SELECTION_TRANSLATE':
+      // 右键菜单触发的选区翻译：走与浮动按钮相同的编排器路径，复用 loading 弹窗
+      orchestrator.translateSelection(message.payload.text);
+      break;
     case 'TRANSLATION_RESULT':
       orchestrator.handleResult(message.payload.paragraphId, message.payload.translated);
       break;

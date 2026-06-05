@@ -81,7 +81,8 @@ export type MessageType =
   | { type: 'TRANSLATE_SELECTION'; payload: { text: string; id: string; context: TranslationContext } }
   | { type: 'TRANSLATION_RESULT'; payload: TranslationResult }
   | { type: 'TRANSLATION_ERROR'; payload: { paragraphId: string; error: string } }
-  | { type: 'TRIGGER_PAGE_TRANSLATE' };
+  | { type: 'TRIGGER_PAGE_TRANSLATE' }
+  | { type: 'TRIGGER_SELECTION_TRANSLATE'; payload: { text: string } };
 
 export const DEFAULT_SETTINGS: UserSettings = {
   apiConfigs: [],
