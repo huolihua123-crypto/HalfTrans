@@ -72,6 +72,16 @@ export default function App() {
             <option value="formal">书面化</option>
           </select>
         </div>
+        {/* 划词图标开关：与 options 页的"划词翻译图标"开关同步（同一字段） */}
+        <div className="flex items-center justify-between">
+          <span className="text-sm text-gray-600">划词图标</span>
+          <input
+            type="checkbox"
+            checked={settings.selectionPopupEnabled}
+            onChange={(e) => updateSetting('selectionPopupEnabled', e.target.checked)}
+            className="w-4 h-4"
+          />
+        </div>
       </div>
 
       <div className="flex items-center justify-between text-sm text-gray-600 border-t pt-3">
