@@ -258,6 +258,20 @@ export default function App() {
             </select>
           </label>
         </div>
+
+        {/* 划词翻译图标开关：关闭后选中文本不再显示浮动「译」按钮 */}
+        <label className="flex items-center justify-between py-2 cursor-pointer">
+          <div>
+            <div className="text-sm text-gray-700">划词翻译图标</div>
+            <div className="text-xs text-gray-400 mt-0.5">选中文本后显示浮动「译」按钮（不影响整页翻译）</div>
+          </div>
+          <input
+            type="checkbox"
+            checked={settings.selectionPopupEnabled}
+            onChange={(e) => immediatelySave({ ...settings, selectionPopupEnabled: e.target.checked })}
+            className="w-4 h-4"
+          />
+        </label>
       </section>
 
       <section className="space-y-4">
